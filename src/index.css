@@ -1,0 +1,12 @@
+@import "tailwindcss";
+
+/* Aquí configuramos tus colores corporativos para Tailwind v4 de forma nativa */
+@theme {
+  --color-brand-dark: #03152F;
+  --color-brand-darkLight: #081D3D;
+  --color-brand-gold: #C5A059;
+  --color-brand-goldLight: #E6C687;
+
+  --font-serif: "Playfair Display", Georgia, serif;
+  --font-sans: "Inter", sans-serif;
+}
