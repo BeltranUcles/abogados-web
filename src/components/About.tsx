@@ -4,7 +4,7 @@ interface AboutProps {
   language?: 'es' | 'fr';
 }
 
-export const About: React.FC<AboutProps> = ({ language }) => {
+export const About: React.FC<AboutProps> = ({ language = 'es' }) => {
   const content = {
     es: {
       tag: "LA FIRMA",
@@ -17,8 +17,8 @@ export const About: React.FC<AboutProps> = ({ language }) => {
         { number: "24/7", label: "Atención Ágil" }
       ],
       bioTag: "DIRECCIÓN ACADÉMICA Y PROFESIONAL",
-      name: "María Beltrán Uclés",
-      role: "Abogada Fundadora • Colegiada Nº XXXX ICA Almería",
+      name: "María Rosa Uclés Gálvez",
+      role: "Abogada Fundadora • Colegiada Nº 5067 ICA Almería",
       bioText1: "Graduada en Derecho por la Universidad de Almería, especializada en Litigación Penal y Derecho de Familia. Con una sólida trayectoria en la defensa de particulares y empresas frente a los tribunales, fundó este despacho con el objetivo de priorizar la transparencia y la cercanía en el trato al cliente.",
       bioText2: "Cuenta con másteres de especialización y estancias académicas internacionales que avalan su competencia bilingüe, permitiendo ofrecer un asesoramiento jurídico riguroso y adaptado tanto en español como en francés para la comunidad extranjera de la provincia.",
       highlightsTitle: "Formación & Destacados",
@@ -26,7 +26,7 @@ export const About: React.FC<AboutProps> = ({ language }) => {
         "Graduada en Derecho — Universidad de Almería",
         "Máster de Acceso a la Abogacía y Práctica Jurídica",
         "Especialización en Derecho Penal y Penitenciario",
-        "Certificación de Competencia Profesional Bilingüe (Español / Francés)"
+        "Certificación de Competencia Profesional Bilingüe (Español / Français)"
       ]
     },
     fr: {
@@ -40,8 +40,8 @@ export const About: React.FC<AboutProps> = ({ language }) => {
         { number: "24/7", label: "Service Réactif" }
       ],
       bioTag: "DIRECTION ACADÉMIQUE ET PROFESSIONNELLE",
-      name: "María Beltrán Uclés",
-      role: "Avocate Fondatrice • Barreau Nº XXXX ICA Almería",
+      name: "María Rosa Uclés Gálvez",
+      role: "Avocate Fondatrice • Barreau Nº 5067 ICA Almería",
       bioText1: "Diplômée en Droit de l'Université d'Almería, spécialisée en Contentieux Pénal et Droit de la Famille. Avec un solide parcours dans la défense des particuliers et des entreprises devant les tribunaux, elle a fondé ce cabinet dans le but de privilégier la transparence et la proximité avec le client.",
       bioText2: "Elle possède des masters de spécialisation et des séjours académiques internationaux qui attestent de sa compétence bilingue, permettant d'offrir un conseil juridique rigoureux et adapté aussi bien en espagnol qu'en français pour la communauté étrangère de la province.",
       highlightsTitle: "Formation & Points Forts",
@@ -49,7 +49,7 @@ export const About: React.FC<AboutProps> = ({ language }) => {
         "Diplômée en Droit — Université d'Almería",
         "Master d'Accès à la Profession d'Avocat et Pratique Juridique",
         "Spécialisation en Droit Pénal et Pénitentiaire",
-        "Certification de Compétence Professionnelle Bilingue (Espagnol / Français)"
+        "Certification de Compétence Professionnelle Bilingüe (Espagnol / Français)"
       ]
     }
   };
@@ -94,7 +94,7 @@ export const About: React.FC<AboutProps> = ({ language }) => {
           </div>
         </div>
 
-        {/* PARTE INFERIOR: Perfil Profesional con Foto maria-rosa.jpeg */}
+        {/* PARTE INFERIOR: Perfil Profesional Único */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center pt-8 border-t border-slate-800/60">
           
           {/* Fotografía Profesional */}
