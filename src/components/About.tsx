@@ -1,66 +1,154 @@
-import React from "react";
-import { useLang } from "../context/LanguageContext";
+import React from 'react';
 
-export default function About() {
-  const { t } = useLang();
+interface AboutProps {
+  language: 'es' | 'fr';
+}
+
+export const About: React.FC<AboutProps> = ({ language }) => {
+  const content = {
+    es: {
+      tag: "LA FIRMA",
+      title: "Compromiso, rigor y cercanía en cada caso",
+      desc1: "En Beltrán & Uclés Abogados entendemos que detrás de cada expediente hay personas que buscan tranquilidad. Nuestro despacho nace con la clara vocación de ofrecer un asesoramiento jurídico de máxima calidad, combinando el rigor técnico con un trato humano y directo.",
+      desc2: "Ubicados en Almería, prestamos servicio de forma presencial en Roquetas de Mar y El Ejido. Además, nuestra total competencia bilingüe nos permite asistir con absoluta garantía a clientes francófonos, facilitando gestiones complejas sin barreras idiomáticas.",
+      stats: [
+        { number: "100%", label: "Compromiso" },
+        { number: "+2", label: "Sedes físicas" },
+        { number: "24/7", label: "Atención Ágil" }
+      ],
+      bioTag: "DIRECCIÓN ACADÉMICA Y PROFESIONAL",
+      name: "María Beltrán Uclés",
+      role: "Abogada Fundadora • Colegiada Nº XXXX ICA Almería",
+      bioText1: "Graduada en Derecho por la Universidad de Almería, especializada en Litigación Penal y Derecho de Familia. Con una sólida trayectoria en la defensa de particulares y empresas frente a los tribunales, fundó este despacho con el objetivo de priorizar la transparencia y la cercanía en el trato al cliente.",
+      bioText2: "Cuenta con másteres de especialización y estancias académicas internacionales que avalan su competencia bilingüe, permitiendo ofrecer un asesoramiento jurídico riguroso y adaptado tanto en español como en francés para la comunidad extranjera de la provincia.",
+      highlightsTitle: "Formación & Destacados",
+      highlights: [
+        "Graduada en Derecho — Universidad de Almería",
+        "Máster de Acceso a la Abogacía y Práctica Jurídica",
+        "Especialización en Derecho Penal y Penitenciario",
+        "Certificación de Competencia Profesional Bilingüe (Español / Francés)"
+      ]
+    },
+    fr: {
+      tag: "LE CABINET",
+      title: "Engagement, rigueur et proximité dans chaque dossier",
+      desc1: "Chez Beltrán & Uclés Avocats, nous comprenons que derrière chaque dossier se trouvent des personnes en quête de tranquillité. Notre cabinet est né avec la vocation claire d'offrir des conseils juridiques de la plus haute qualité, alliant rigueur technique et approche humaine et directe.",
+      desc2: "Situés à Almería, nous fournissons des services en personne à Roquetas de Mar et El Ejido. De plus, notre pleine compétence bilingue nous permet d'assister les clients francophones avec une garantie absolue, facilitant les démarches complexes sans barrières linguistiques.",
+      stats: [
+        { number: "100%", label: "Engagement" },
+        { number: "+2", label: "Bureaux physiques" },
+        { number: "24/7", label: "Service Réactif" }
+      ],
+      bioTag: "DIRECTION ACADÉMIQUE ET PROFESSIONNELLE",
+      name: "María Beltrán Uclés",
+      role: "Avocate Fondatrice • Barreau Nº XXXX ICA Almería",
+      bioText1: "Diplômée en Droit de l'Université d'Almería, spécialisée en Contentieux Pénal et Droit de la Famille. Avec un solide parcours dans la défense des particuliers et des entreprises devant les tribunaux, elle a fondé ce cabinet dans le but de privilégier la transparence et la proximité avec le client.",
+      bioText2: "Elle possède des masters de spécialisation et des séjours académiques internationaux qui attestent de sa compétence bilingue, permettant d'offrir un conseil juridique rigoureux et adapté aussi bien en espagnol qu'en français pour la communauté étrangère de la province.",
+      highlightsTitle: "Formation & Points Forts",
+      highlights: [
+        "Diplômée en Droit — Université d'Almería",
+        "Master d'Accès à la Profession d'Avocat et Pratique Juridique",
+        "Spécialisation en Droit Pénal et Pénitentiaire",
+        "Certification de Compétence Professionnelle Bilingue (Espagnol / Français)"
+      ]
+    }
+  };
+
+  const t = content[language] || content.es;
 
   return (
-    <section id="firma" className="py-20 bg-brand-darkLight/40 border-t border-b border-brand-darkLight/30 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+    <div className="bg-[#051329] min-h-screen text-slate-100 py-16 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-6xl mx-auto space-y-20">
         
-        {/* TEXTO: Izquierda (Toma 7 de 12 columnas en pantallas grandes) */}
-        <div className="lg:col-span-7 space-y-6">
-          <span className="inline-block px-3 py-1 bg-brand-gold/10 border border-brand-gold/20 text-brand-gold font-sans text-xs uppercase tracking-widest rounded-md">
-            {t("about.badge")}
-          </span>
-          <h2 className="font-serif text-3xl sm:text-4xl font-bold text-white tracking-tight leading-tight">
-            {t("about.title")}
-          </h2>
-          <div className="space-y-4 text-white/70 font-light text-base sm:text-lg leading-relaxed">
-            <p>{t("about.p1")}</p>
-            <p>{t("about.p2")}</p>
+        {/* PARTE SUPERIOR: Encabezado y Estadísticas */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+          <div className="lg:col-span-7 space-y-6">
+            <span className="text-xs font-semibold tracking-widest text-[#c5a46d] uppercase bg-[#c5a46d]/10 px-3 py-1 rounded border border-[#c5a46d]/20">
+              {t.tag}
+            </span>
+            <h1 className="text-3xl sm:text-4xl font-serif font-bold text-white leading-tight">
+              {t.title}
+            </h1>
+            <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
+              {t.desc1}
+            </p>
+            <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
+              {t.desc2}
+            </p>
+          </div>
+
+          <div className="lg:col-span-5 space-y-4">
+            {t.stats.map((stat, idx) => (
+              <div 
+                key={idx} 
+                className="bg-[#0a1e3f]/60 border border-slate-800 rounded-lg p-5 flex items-center justify-between"
+              >
+                <span className="text-3xl font-serif font-bold text-[#c5a46d]">
+                  {stat.number}
+                </span>
+                <span className="text-xs text-slate-400 font-medium uppercase tracking-wider">
+                  {stat.label}
+                </span>
+              </div>
+            ))}
           </div>
         </div>
 
-        {/* TARJETAS DE ESTADÍSTICAS: Derecha (Toma 5 de 12 columnas) */}
-        <div className="lg:col-span-5 grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-1 gap-6">
+        {/* PARTE INFERIOR: Perfil Profesional con Foto maria-rosa.jpeg */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center pt-8 border-t border-slate-800/60">
           
-          {/* Tarjeta 1 */}
-          <div className="bg-brand-dark/60 border border-brand-gold/15 rounded-xl p-6 flex items-center space-x-4 shadow-sm hover:border-brand-gold/30 transition-all duration-300">
-            <span className="font-serif text-3xl sm:text-4xl font-bold text-brand-gold">
-              {t("about.stat1_num")}
-            </span>
-            <div className="h-8 w-px bg-brand-gold/20"></div>
-            <span className="text-white/80 font-sans text-sm font-medium tracking-wide">
-              {t("about.stat1_txt")}
-            </span>
+          {/* Fotografía Profesional */}
+          <div className="lg:col-span-5 flex justify-center">
+            <div className="w-full max-w-sm h-[480px] rounded-xl overflow-hidden border border-slate-800 bg-[#0a1e3f]/40 shadow-xl">
+              <img 
+                src="/maria-rosa.jpeg" 
+                alt={t.name}
+                className="w-full h-full object-cover object-top"
+              />
+            </div>
           </div>
 
-          {/* Tarjeta 2 */}
-          <div className="bg-brand-dark/60 border border-brand-gold/15 rounded-xl p-6 flex items-center space-x-4 shadow-sm hover:border-brand-gold/30 transition-all duration-300">
-            <span className="font-serif text-3xl sm:text-4xl font-bold text-brand-gold">
-              {t("about.stat2_num")}
-            </span>
-            <div className="h-8 w-px bg-brand-gold/20"></div>
-            <span className="text-white/80 font-sans text-sm font-medium tracking-wide">
-              {t("about.stat2_txt")}
-            </span>
-          </div>
+          {/* Información y Biografía */}
+          <div className="lg:col-span-7 space-y-6">
+            <div>
+              <span className="text-xs font-semibold tracking-widest text-[#c5a46d] uppercase bg-[#c5a46d]/10 px-3 py-1 rounded border border-[#c5a46d]/20">
+                {t.bioTag}
+              </span>
+              <h2 className="text-3xl font-serif font-bold text-white mt-3">
+                {t.name}
+              </h2>
+              <p className="text-xs sm:text-sm text-[#c5a46d] font-medium mt-1">
+                {t.role}
+              </p>
+            </div>
 
-          {/* Tarjeta 3 */}
-          <div className="bg-brand-dark/60 border border-brand-gold/15 rounded-xl p-6 flex items-center space-x-4 shadow-sm hover:border-brand-gold/30 transition-all duration-300">
-            <span className="font-serif text-3xl sm:text-4xl font-bold text-brand-gold">
-              {t("about.stat3_num")}
-            </span>
-            <div className="h-8 w-px bg-brand-gold/20"></div>
-            <span className="text-white/80 font-sans text-sm font-medium tracking-wide">
-              {t("about.stat3_txt")}
-            </span>
+            <p className="text-slate-300 text-xs sm:text-sm leading-relaxed">
+              {t.bioText1}
+            </p>
+            <p className="text-slate-300 text-xs sm:text-sm leading-relaxed">
+              {t.bioText2}
+            </p>
+
+            <div className="pt-4 space-y-3">
+              <h3 className="text-sm font-serif font-semibold text-white">
+                {t.highlightsTitle}
+              </h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-slate-300">
+                {t.highlights.map((item, i) => (
+                  <div key={i} className="flex items-start space-x-2">
+                    <span className="text-[#c5a46d]">✓</span>
+                    <span>{item}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
 
         </div>
 
       </div>
-    </section>
+    </div>
   );
-}
+};
+
+export default About;
