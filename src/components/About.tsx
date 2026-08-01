@@ -1,7 +1,7 @@
 import React from 'react';
 
 interface AboutProps {
-  language: 'es' | 'fr';
+  language?: 'es' | 'fr';
 }
 
 export const About: React.FC<AboutProps> = ({ language }) => {
