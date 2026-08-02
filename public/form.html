@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Form Detection</title>
+</head>
+<body>
+  <!-- Este formulario oculto le indica a Netlify qué campos existen -->
+  <form name="contacto" netlify netlify-honeypot="bot-field" hidden>
+    <input type="text" name="name" />
+    <input type="email" name="email" />
+    <input type="tel" name="phone" />
+    <select name="specialty"></select>
+    <textarea name="message"></textarea>
+  </form>
+</body>
+</html>

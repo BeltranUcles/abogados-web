@@ -6,15 +6,28 @@ export default function Contact() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setSubmitted(true);
-      setTimeout(() => setSubmitted(false), 5000);
-    }, 1500);
+
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+
+    fetch("/", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams(formData as any).toString(),
+    })
+      .then(() => {
+        setIsSubmitting(false);
+        setSubmitted(true);
+        form.reset();
+        setTimeout(() => setSubmitted(false), 5000);
+      })
+      .catch((error) => {
+        console.error("Error al enviar el formulario:", error);
+        setIsSubmitting(false);
+      });
   };
 
   return (
@@ -35,7 +48,7 @@ export default function Contact() {
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
         
-        {/* COLUMNA IZQUIERDA: Información de contacto (Diseño premium destacado) */}
+        {/* COLUMNA IZQUIERDA: Información de contacto */}
         <div className="lg:col-span-5 space-y-8 bg-brand-darkLight/40 border border-brand-darkLight/80 rounded-2xl p-8 sm:p-10 shadow-xl flex flex-col justify-between">
           <div className="space-y-6">
             <div className="space-y-3">
@@ -124,9 +137,17 @@ export default function Contact() {
           </div>
         </div>
 
-        {/* COLUMNA DERECHA: Formulario de contacto (Fondo nítido y mejorado) */}
+        {/* COLUMNA DERECHA: Formulario de contacto */}
         <div className="lg:col-span-7 bg-brand-darkLight/40 border border-brand-darkLight/80 p-8 sm:p-10 rounded-2xl shadow-xl flex flex-col justify-between">
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form 
+            name="contacto" 
+            method="POST" 
+            data-netlify="true" 
+            onSubmit={handleSubmit} 
+            className="space-y-6"
+          >
+            {/* Campo oculto obligatorio para Netlify */}
+            <input type="hidden" name="form-name" value="contacto" />
             
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               {/* Nombre */}
@@ -134,6 +155,7 @@ export default function Contact() {
                 <label className="text-xs text-brand-gold/90 font-semibold tracking-wider block">{t("contact.form_name")}</label>
                 <input 
                   type="text" 
+                  name="name"
                   required
                   className="w-full bg-brand-dark/80 border border-brand-darkLight/90 hover:border-brand-gold/40 focus:border-brand-gold focus:outline-none focus:ring-1 focus:ring-brand-gold rounded-lg px-4 py-3.5 text-sm text-white placeholder-white/20 transition-all"
                   placeholder="Ej. Juan Pérez"
@@ -145,6 +167,7 @@ export default function Contact() {
                 <label className="text-xs text-brand-gold/90 font-semibold tracking-wider block">{t("contact.form_email")}</label>
                 <input 
                   type="email" 
+                  name="email"
                   required
                   className="w-full bg-brand-dark/80 border border-brand-darkLight/90 hover:border-brand-gold/40 focus:border-brand-gold focus:outline-none focus:ring-1 focus:ring-brand-gold rounded-lg px-4 py-3.5 text-sm text-white placeholder-white/20 transition-all"
                   placeholder="ejemplo@correo.com"
@@ -158,6 +181,7 @@ export default function Contact() {
                 <label className="text-xs text-brand-gold/90 font-semibold tracking-wider block">{t("contact.form_phone")}</label>
                 <input 
                   type="tel" 
+                  name="phone"
                   required
                   className="w-full bg-brand-dark/80 border border-brand-darkLight/90 hover:border-brand-gold/40 focus:border-brand-gold focus:outline-none focus:ring-1 focus:ring-brand-gold rounded-lg px-4 py-3.5 text-sm text-white placeholder-white/20 transition-all"
                   placeholder="600 000 000"
@@ -169,6 +193,7 @@ export default function Contact() {
                 <label className="text-xs text-brand-gold/90 font-semibold tracking-wider block">{t("contact.form_specialty")}</label>
                 <div className="relative">
                   <select 
+                    name="specialty"
                     required
                     className="w-full bg-brand-dark/80 border border-brand-darkLight/90 hover:border-brand-gold/40 focus:border-brand-gold focus:outline-none focus:ring-1 focus:ring-brand-gold rounded-lg px-4 py-3.5 text-sm text-white/90 transition-all appearance-none cursor-pointer"
                   >
@@ -193,6 +218,7 @@ export default function Contact() {
             <div className="space-y-2">
               <label className="text-xs text-brand-gold/90 font-semibold tracking-wider block">{t("contact.form_message")}</label>
               <textarea 
+                name="message"
                 rows={5}
                 required
                 className="w-full bg-brand-dark/80 border border-brand-darkLight/90 hover:border-brand-gold/40 focus:border-brand-gold focus:outline-none focus:ring-1 focus:ring-brand-gold rounded-lg px-4 py-3.5 text-sm text-white placeholder-white/20 transition-all resize-none"
