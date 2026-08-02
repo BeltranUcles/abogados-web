@@ -133,44 +133,48 @@ Si necesita ayuda sobre este tema, puede [contactar con nuestro despacho](/conta
     setIsPublishing(true);
     setSuccessMsg("");
 
-    const slug = title
-      .toLowerCase()
-      .trim()
-      .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "")
-      .replace(/[^\w\s-]/g, "")
-      .replace(/[\s_-]+/g, "-")
-      .replace(/^-+|-+$/g, "");
+    try {
+      const slug = title
+        .toLowerCase()
+        .trim()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/[^\w\s-]/g, "")
+        .replace(/[\s_-]+/g, "-")
+        .replace(/^-+|-+$/g, "");
 
-    const postData = {
-      title,
-      slug,
-      category,
-      image_url: imageUrl || null,
-      excerpt,
-      content,
-      author,
-      published: true,
-    };
+      const postData = {
+        title,
+        slug,
+        category,
+        image_url: imageUrl || null,
+        excerpt,
+        content,
+        author,
+        published: true,
+      };
 
-    let error = null;
+      let error = null;
 
-    if (editingPostId) {
-      const res = await supabase.from("posts").update(postData).eq("id", editingPostId);
-      error = res.error;
-    } else {
-      const res = await supabase.from("posts").insert([{ ...postData, created_at: new Date().toISOString() }]);
-      error = res.error;
-    }
+      if (editingPostId) {
+        const res = await supabase.from("posts").update(postData).eq("id", editingPostId);
+        error = res.error;
+      } else {
+        const res = await supabase.from("posts").insert([{ ...postData, created_at: new Date().toISOString() }]);
+        error = res.error;
+      }
 
-    setIsPublishing(false);
-
-    if (error) {
-      alert("Error en Supabase: " + error.message);
-    } else {
-      setSuccessMsg(editingPostId ? "¡Artículo actualizado correctamente!" : "¡Artículo publicado correctamente!");
-      handleCancelEdit();
-      fetchPosts();
+      if (error) {
+        alert("Error en Supabase: " + error.message);
+      } else {
+        setSuccessMsg(editingPostId ? "¡Artículo actualizado correctamente!" : "¡Artículo publicado correctamente!");
+        handleCancelEdit();
+        fetchPosts();
+      }
+    } catch (err: any) {
+      alert("Error inesperado: " + err.message);
+    } finally {
+      setIsPublishing(false);
     }
   };
 
