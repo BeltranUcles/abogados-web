@@ -11,6 +11,7 @@ import FirmaPage from "./pages/FirmaPage";
 import SpecialtyDetailPage from "./pages/SpecialtyDetailPage";
 import { useLang } from "./context/LanguageContext";
 import BlogPage from "./pages/BlogPage";
+import BlogPostDetailPage from "./pages/BlogPostDetailPage"; // <--- Añadido
 import AdminPage from "./pages/AdminPage";
 import CookiesPage from "./pages/CookiesPage";
 
@@ -87,6 +88,7 @@ export default function App() {
             <Route path="/especialidades/:slug" element={<SpecialtyDetailPage />} />
             <Route path="/contacto" element={<Contact />} />
             <Route path="/blog" element={<BlogPage />} />
+            <Route path="/blog/:slug" element={<BlogPostDetailPage />} /> {/* <--- Ruta del artículo individual */}
             <Route path="/admin" element={<AdminPage />} />          
             <Route path="/politica-de-cookies" element={<CookiesPage />} />
           </Routes>

@@ -64,7 +64,6 @@ export default function BlogPostDetailPage() {
 
   return (
     <article className="py-12 sm:py-20 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto space-y-8 animate-fadeIn">
-      
       {/* Botón Volver */}
       <div>
         <Link
@@ -118,11 +117,10 @@ export default function BlogPostDetailPage() {
         </div>
       )}
 
-      {/* Contenido Completo (Soporta Markdown: Enlaces, Negritas, Encabezados) */}
+      {/* Contenido Completo (Markdown) */}
       <div className="prose prose-invert max-w-none text-white/80 leading-relaxed space-y-6 text-base font-light pt-4">
         <ReactMarkdown
           components={{
-            // Formatear enlaces correctamente
             a: ({ node, ...props }) => (
               <a
                 {...props}
@@ -131,21 +129,18 @@ export default function BlogPostDetailPage() {
                 className="text-brand-gold underline hover:text-brand-goldLight transition-colors font-medium"
               />
             ),
-            // Formatear encabezados internos
             h2: ({ node, ...props }) => (
               <h2 {...props} className="font-serif text-2xl font-bold text-white pt-6 pb-2 border-b border-brand-darkLight/60" />
             ),
             h3: ({ node, ...props }) => (
               <h3 {...props} className="font-serif text-xl font-bold text-white pt-4" />
             ),
-            // Formatear listas
             ul: ({ node, ...props }) => (
               <ul {...props} className="list-disc list-inside space-y-2 pl-2 text-white/80" />
             ),
             ol: ({ node, ...props }) => (
               <ol {...props} className="list-decimal list-inside space-y-2 pl-2 text-white/80" />
             ),
-            // Párrafos
             p: ({ node, ...props }) => (
               <p {...props} className="leading-relaxed" />
             )
@@ -155,7 +150,7 @@ export default function BlogPostDetailPage() {
         </ReactMarkdown>
       </div>
 
-      {/* Bloque final de llamada a la acción */}
+      {/* CTA Final */}
       <div className="pt-10 border-t border-brand-darkLight/60 flex flex-col sm:flex-row items-center justify-between gap-6 bg-brand-darkLight/20 p-6 sm:p-8 rounded-2xl">
         <div className="space-y-1 text-center sm:text-left">
           <h4 className="font-serif text-lg font-bold text-white">
@@ -174,7 +169,6 @@ export default function BlogPostDetailPage() {
           {lang === "es" ? "Contactar despacho" : "Contacter le cabinet"}
         </Link>
       </div>
-
     </article>
   );
 }
