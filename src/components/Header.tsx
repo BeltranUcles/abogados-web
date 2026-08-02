@@ -1,10 +1,24 @@
 import React, { useState } from "react";
 import { useLang } from "../context/LanguageContext";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 export default function Header() {
   const { lang, setLang, t } = useLang();
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const location = useLocation();
+
+  // Función para forzar el scroll arriba del todo al hacer clic en el logo
+  const handleLogoClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (location.pathname === "/") {
+      e.preventDefault(); // Evita que React Router ignore el clic estando en la misma página
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    } else {
+      window.scrollTo(0, 0);
+    }
+  };
 
   // Claves para las especialidades del desplegable
   const dropdownItems = [
@@ -21,7 +35,11 @@ export default function Header() {
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         
         {/* LOGOTIPO CON FORMATO REDONDO */}
-        <Link to="/" className="flex items-center gap-3 sm:gap-4 group">
+        <Link 
+          to="/" 
+          onClick={handleLogoClick}
+          className="flex items-center gap-3 sm:gap-4 group"
+        >
           <div className="h-12 w-12 sm:h-14 sm:w-14 rounded-full overflow-hidden flex items-center justify-center shrink-0">
             <img 
               src="/logo.png" 

@@ -2,7 +2,41 @@ import React, { useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useLang } from "../context/LanguageContext";
 
-// Datos extendidos de las especialidades para mostrar información detallada
+// Imágenes dinámicas para cada una de las especialidades
+const specialtyImages: Record<string, { url: string; noteEs: string; noteFr: string }> = {
+  "derecho-penal": {
+    url: "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=1200&q=80",
+    noteEs: "Asistencia 24/7 en urgencias penales y juzgados de guardia.",
+    noteFr: "Assistance 24/7 en urgence pénale et garde à vue.",
+  },
+  "derecho-civil": {
+    url: "https://images.unsplash.com/photo-1450133064473-71024230f91b?auto=format&fit=crop&w=1200&q=80",
+    noteEs: "Protección patrimonial y acuerdos contractuales sólidos.",
+    noteFr: "Protection patrimoniale et sécurité contractuelle.",
+  },
+  "derecho-de-familia": {
+    url: "https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&w=1200&q=80",
+    noteEs: "Soluciones empáticas y mediación en conflictos familiares.",
+    noteFr: "Solutions humaines et médiation dans les conflits familiaux.",
+  },
+  "derecho-laboral": {
+    url: "https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&w=1200&q=80",
+    noteEs: "Defensa integral del trabajador y asesoramiento empresarial.",
+    noteFr: "Défense du salarié et conseil juridique d'entreprise.",
+  },
+  "herencias-y-sucesiones": {
+    url: "https://images.unsplash.com/photo-1505664194779-8beaceb93744?auto=format&fit=crop&w=1200&q=80",
+    noteEs: "Planificación de legado y optimización fiscal hereditaria.",
+    noteFr: "Planification successorale et optimisation fiscale.",
+  },
+  "extranjeria-e-inmigracion": {
+    url: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=1200&q=80",
+    noteEs: "Asistencia bilingüe (Español / Francés) en trámites de residencia.",
+    noteFr: "Accompagnement bilingue pour vos démarches en Espagne.",
+  },
+};
+
+// Datos extendidos de las especialidades
 const specialtyDetails = {
   es: {
     "derecho-penal": {
@@ -162,7 +196,13 @@ export default function SpecialtyDetailPage() {
   const [submitted, setSubmitted] = useState(false);
 
   // Buscar la información de la especialidad correspondiente al slug y al idioma actual
-  const specialty = specialtyDetails[lang]?.[slug || ""];
+  const currentSlug = slug || "";
+  const specialty = specialtyDetails[lang]?.[currentSlug];
+  const imageData = specialtyImages[currentSlug] || {
+    url: "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=1200&q=80",
+    noteEs: "Bufete de Abogados Beltrán & Uclés",
+    noteFr: "Cabinet d'Avocats Beltrán & Uclés"
+  };
 
   if (!specialty) {
     return (
@@ -187,59 +227,84 @@ export default function SpecialtyDetailPage() {
   };
 
   return (
-    <div className="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-16 animate-fadeIn">
+    <div className="py-12 sm:py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-12 animate-fadeIn">
       
       {/* Botón Volver */}
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-7xl mx-auto">
         <Link to="/especialidades" className="inline-flex items-center text-xs tracking-widest uppercase text-brand-gold hover:text-brand-goldLight transition-colors space-x-2">
           <span>←</span>
           <span>{lang === "es" ? "Volver a especialidades" : "Retour aux spécialités"}</span>
         </Link>
       </div>
 
-      {/* Cabecera de la Especialidad */}
-      <div className="max-w-4xl mx-auto space-y-4">
-        <span className="inline-block px-3 py-1 bg-brand-gold/10 border border-brand-gold/20 text-brand-gold font-sans text-xs uppercase tracking-widest rounded-md">
-          {specialty.badge}
-        </span>
-        <h1 className="font-serif text-4xl sm:text-5xl font-bold text-white tracking-tight leading-tight">
-          {specialty.title}
-        </h1>
-        <p className="text-brand-gold/90 font-serif text-lg sm:text-xl font-light italic">
-          {specialty.subtitle}
-        </p>
-      </div>
-
-      {/* Contenido en dos columnas */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 max-w-4xl lg:max-w-7xl mx-auto items-start">
+      {/* HERO SECTION DE LA ESPECIALIDAD CON FOTO ELEGANTE INTEGRADA */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-brand-darkLight/30 border border-brand-darkLight/70 rounded-3xl p-6 sm:p-8 lg:p-10 shadow-2xl overflow-hidden relative">
         
-        {/* Columna Izquierda: Información Técnica y Lista */}
-        <div className="lg:col-span-7 space-y-8">
-          <p className="text-white/80 font-light text-base sm:text-lg leading-relaxed">
+        {/* Lado Izquierdo: Títulos y Resumen */}
+        <div className="lg:col-span-7 flex flex-col justify-center space-y-6 z-10">
+          <div>
+            <span className="inline-block px-3.5 py-1 bg-brand-gold/10 border border-brand-gold/30 text-brand-gold font-sans text-xs uppercase tracking-widest rounded-full font-semibold">
+              {specialty.badge}
+            </span>
+          </div>
+          <h1 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight leading-tight">
+            {specialty.title}
+          </h1>
+          <p className="text-brand-gold/90 font-serif text-lg sm:text-xl font-light italic">
+            {specialty.subtitle}
+          </p>
+          <p className="text-white/80 font-light text-sm sm:text-base leading-relaxed">
             {specialty.intro}
           </p>
+        </div>
 
-          <div className="bg-brand-darkLight/30 border border-brand-darkLight/80 rounded-2xl p-6 sm:p-8 space-y-6 shadow-xl">
-            <h3 className="font-serif text-xl font-semibold text-white">
-              {lang === "es" ? "Nuestros servicios detallados" : "Nos services détaillés"}
-            </h3>
-            
-            <ul className="space-y-4">
-              {specialty.details.map((item, index) => (
-                <li key={index} className="flex items-start space-x-3.5">
-                  <span className="flex-shrink-0 w-6 h-6 rounded-full bg-brand-gold/10 border border-brand-gold/20 text-brand-gold text-xs flex items-center justify-center font-bold mt-0.5">
-                    {index + 1}
-                  </span>
-                  <span className="text-white/70 font-light text-sm sm:text-base leading-relaxed">
-                    {item}
-                  </span>
-                </li>
-              ))}
-            </ul>
+        {/* Lado Derecho: Tarjeta Visual de Imagen con altura fijada */}
+        <div className="lg:col-span-5 relative h-72 sm:h-80 lg:h-[320px] max-h-[350px] rounded-2xl overflow-hidden border border-brand-gold/20 shadow-xl group">
+          <img 
+            src={imageData.url} 
+            alt={specialty.title} 
+            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+          />
+          {/* Overlay oscuro para integrar con los colores de la marca */}
+          <div className="absolute inset-0 bg-gradient-to-t from-[#020d1e] via-[#020d1e]/30 to-transparent"></div>
+          
+          {/* Nota flotante en la imagen */}
+          <div className="absolute bottom-4 left-4 right-4 p-4 bg-brand-dark/85 backdrop-blur-md rounded-xl border border-brand-gold/20">
+            <p className="text-[11px] text-brand-gold font-semibold uppercase tracking-wider">
+              {lang === "es" ? "Compromiso Jurídico" : "Engagement Juridique"}
+            </p>
+            <p className="text-xs text-white/90 mt-0.5">
+              {lang === "es" ? imageData.noteEs : imageData.noteFr}
+            </p>
           </div>
         </div>
 
-        {/* Columna Derecha: Formulario de consulta rápida específico */}
+      </div>
+
+      {/* CONTENIDO PRINCIPAL: SERVICIOS Y FORMULARIO DE CONSULTA */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+        
+        {/* Columna Izquierda: Servicios Detallados */}
+        <div className="lg:col-span-7 bg-brand-darkLight/20 border border-brand-darkLight/70 rounded-2xl p-6 sm:p-8 space-y-6 shadow-xl">
+          <h3 className="font-serif text-2xl font-semibold text-white">
+            {lang === "es" ? "Nuestros servicios detallados" : "Nos services détaillés"}
+          </h3>
+          
+          <ul className="space-y-4">
+            {specialty.details.map((item, index) => (
+              <li key={index} className="flex items-start space-x-3.5">
+                <span className="flex-shrink-0 w-6 h-6 rounded-full bg-brand-gold/10 border border-brand-gold/30 text-brand-gold text-xs flex items-center justify-center font-bold mt-0.5">
+                  {index + 1}
+                </span>
+                <span className="text-white/80 font-light text-sm sm:text-base leading-relaxed">
+                  {item}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Columna Derecha: Formulario de Consulta Rápida */}
         <div className="lg:col-span-5 bg-brand-darkLight/40 border border-brand-darkLight/80 rounded-2xl p-6 sm:p-8 shadow-xl space-y-6">
           <div className="space-y-2">
             <h3 className="font-serif text-2xl font-bold text-white">
@@ -247,13 +312,12 @@ export default function SpecialtyDetailPage() {
             </h3>
             <p className="text-white/60 text-xs font-light">
               {lang === "es" 
-                ? "Cuéntenos su problema penal o civil y nos comunicaremos de inmediato." 
+                ? "Cuéntenos su caso y nos comunicaremos con usted de inmediato." 
                 : "Décrivez votre problème et nous vous contacterons immédiatement."}
             </p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-5">
-            {/* Campo oculto o pre-relleno para la abogada */}
             <div className="space-y-1.5">
               <label className="text-[10px] text-brand-gold/90 font-bold uppercase tracking-wider block">
                 {lang === "es" ? "Especialidad Seleccionada" : "Spécialité Sélectionnée"}
