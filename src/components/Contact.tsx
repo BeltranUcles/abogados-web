@@ -13,20 +13,39 @@ export default function Contact() {
     const form = e.currentTarget;
     const formData = new FormData(form);
 
-    fetch("/", {
+    fetch("https://api.web3forms.com/submit", {
       method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: new URLSearchParams(formData as any).toString(),
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify({
+        access_key: "84daad0e-601d-40b7-b608-47fab10c1523",
+        name: formData.get("name"),
+        email: formData.get("email"),
+        phone: formData.get("phone"),
+        specialty: formData.get("specialty"),
+        message: formData.get("message"),
+        subject: "Nuevo mensaje de consulta desde beltranyuclesabogados.com",
+        from_name: "Web Beltrán & Uclés Abogados",
+      }),
     })
-      .then(() => {
+      .then((res) => res.json())
+      .then((data) => {
         setIsSubmitting(false);
-        setSubmitted(true);
-        form.reset();
-        setTimeout(() => setSubmitted(false), 5000);
+        if (data.success) {
+          setSubmitted(true);
+          form.reset();
+          setTimeout(() => setSubmitted(false), 5000);
+        } else {
+          console.error("Error en Web3Forms:", data);
+          alert("Hubo un error al enviar el mensaje. Inténtelo de nuevo.");
+        }
       })
       .catch((error) => {
         console.error("Error al enviar el formulario:", error);
         setIsSubmitting(false);
+        alert("Error de conexión. Inténtelo más tarde.");
       });
   };
 
@@ -140,15 +159,9 @@ export default function Contact() {
         {/* COLUMNA DERECHA: Formulario de contacto */}
         <div className="lg:col-span-7 bg-brand-darkLight/40 border border-brand-darkLight/80 p-8 sm:p-10 rounded-2xl shadow-xl flex flex-col justify-between">
           <form 
-            name="contacto" 
-            method="POST" 
-            data-netlify="true" 
             onSubmit={handleSubmit} 
             className="space-y-6"
           >
-            {/* Campo oculto obligatorio para Netlify */}
-            <input type="hidden" name="form-name" value="contacto" />
-            
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               {/* Nombre */}
               <div className="space-y-2">
