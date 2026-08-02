@@ -28,11 +28,12 @@ export default function Footer() {
         </nav>
 
         {/* POLÍTICAS LEGALES */}
-        <div className="flex flex-wrap justify-center gap-4 text-[10px] text-white/40 font-sans">
+        <div className="flex flex-wrap justify-center items-center gap-4 text-[10px] text-white/40 font-sans">
           <span>&copy; {new Date().getFullYear()} Beltrán & Uclés. {t("footer.rights")}</span>
           <span className="hidden sm:inline">|</span>
-          <Link to="/legal" className="hover:text-brand-gold transition-colors">{t("footer.legal")}</Link>
-          <Link to="/privacidad" className="hover:text-brand-gold transition-colors">{t("footer.privacy")}</Link>
+          <Link to="/politica-de-cookies" className="hover:text-brand-gold transition-colors">
+            Aviso Legal y Cookies
+          </Link>
         </div>
 
       </div>
