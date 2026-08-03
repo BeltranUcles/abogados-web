@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 import { useLang } from "../context/LanguageContext";
 import { supabase } from "../lib/supabase";
 import type { BlogPost } from "../lib/supabase";
@@ -8,6 +9,23 @@ export default function BlogPage() {
   const { lang } = useLang();
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
+
+  // Metadatos SEO y Open Graph específicos para la página del Blog
+  const seoMeta = {
+    es: {
+      title: "Blog Jurídico y Actualidad Legal | Beltrán & Uclés Abogados",
+      description: "Manténgase informado sobre la actualidad legal, artículos de interés, consejos y novedades jurídicas de nuestro despacho de abogados en Almería.",
+      image: "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=1200&q=80"
+    },
+    fr: {
+      title: "Blog Juridique et Actualité | Beltrán & Uclés Abogados",
+      description: "Restez informé de l'actualité juridique, des articles d'intérêt et des nouveautés de notre cabinet d'avocats.",
+      image: "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=1200&q=80"
+    }
+  };
+
+  const currentMeta = seoMeta[lang as "es" | "fr"] || seoMeta.es;
+  const currentUrl = window.location.href;
 
   useEffect(() => {
     async function fetchPosts() {
@@ -38,6 +56,9 @@ export default function BlogPage() {
   if (loading) {
     return (
       <div className="py-32 text-center text-brand-gold animate-pulse text-sm font-light">
+        <Helmet>
+          <title>{currentMeta.title}</title>
+        </Helmet>
         {lang === "es" ? "Cargando publicaciones..." : "Chargement des articles..."}
       </div>
     );
@@ -45,6 +66,25 @@ export default function BlogPage() {
 
   return (
     <div className="py-16 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto space-y-12 animate-fadeIn">
+      {/* SEO y Open Graph con React Helmet Async */}
+      <Helmet>
+        <title>{currentMeta.title}</title>
+        <meta name="description" content={currentMeta.description} />
+        
+        {/* Open Graph / Facebook / WhatsApp */}
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={currentUrl} />
+        <meta property="og:title" content={currentMeta.title} />
+        <meta property="og:description" content={currentMeta.description} />
+        <meta property="og:image" content={currentMeta.image} />
+
+        {/* Twitter Cards */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={currentMeta.title} />
+        <meta name="twitter:description" content={currentMeta.description} />
+        <meta name="twitter:image" content={currentMeta.image} />
+      </Helmet>
+
       {/* Cabecera de la sección de Blog */}
       <div className="text-center space-y-4">
         <h1 className="font-serif text-4xl sm:text-5xl font-bold text-white">

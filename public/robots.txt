@@ -1,0 +1,10 @@
+# Permitir el rastreo a todos los motores de búsqueda
+User-agent: *
+Allow: /
+
+# Bloquear rutas privadas o de gestión si las hubiera (ejemplo)
+Disallow: /admin/
+Disallow: /private/
+
+# Enlace al mapa del sitio (reemplaza tu-dominio.com por tu dominio real)
+Sitemap: https://tu-dominio.com/sitemap.xml

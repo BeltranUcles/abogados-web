@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
+import { Helmet } from "react-helmet-async";
 import { useLang } from "../context/LanguageContext";
 import { supabase } from "../lib/supabase";
 import type { BlogPost } from "../lib/supabase";
@@ -41,6 +42,9 @@ export default function BlogPostDetailPage() {
   if (loading) {
     return (
       <div className="py-24 text-center text-brand-gold animate-pulse text-sm font-light">
+        <Helmet>
+          <title>{lang === "es" ? "Cargando publicación... | Beltrán & Uclés" : "Chargement de l'article... | Beltrán & Uclés"}</title>
+        </Helmet>
         {lang === "es" ? "Cargando publicación..." : "Chargement de l'article..."}
       </div>
     );
@@ -49,6 +53,9 @@ export default function BlogPostDetailPage() {
   if (!post) {
     return (
       <div className="py-24 text-center space-y-4 max-w-md mx-auto px-4">
+        <Helmet>
+          <title>{lang === "es" ? "Artículo no encontrado | Beltrán & Uclés Abogados" : "Article non trouvé | Beltrán & Uclés Abogados"}</title>
+        </Helmet>
         <p className="text-white/70 font-light text-base">
           {lang === "es" ? "El artículo solicitado no existe o ha sido despublicado." : "Cet article n'existe pas ou a été retiré."}
         </p>
@@ -62,8 +69,33 @@ export default function BlogPostDetailPage() {
     );
   }
 
+  // Metadatos SEO y Open Graph dinámicos basados en el contenido del post
+  const pageTitle = `${post.title} | Beltrán & Uclés Abogados`;
+  const pageDescription = post.excerpt || (lang === "es" ? "Artículo jurídico y de actualidad legal de nuestro despacho." : "Article juridique et d'actualité de notre cabinet.");
+  const pageImage = post.image_url || "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=1200&q=80";
+  const currentUrl = window.location.href;
+
   return (
     <article className="py-12 sm:py-20 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto space-y-8 animate-fadeIn">
+      {/* SEO, Open Graph y Twitter Cards Dinámicos */}
+      <Helmet>
+        <title>{pageTitle}</title>
+        <meta name="description" content={pageDescription} />
+
+        {/* Open Graph / Facebook / WhatsApp */}
+        <meta property="og:type" content="article" />
+        <meta property="og:url" content={currentUrl} />
+        <meta property="og:title" content={pageTitle} />
+        <meta property="og:description" content={pageDescription} />
+        <meta property="og:image" content={pageImage} />
+
+        {/* Twitter Cards */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={pageTitle} />
+        <meta name="twitter:description" content={pageDescription} />
+        <meta name="twitter:image" content={pageImage} />
+      </Helmet>
+
       {/* Botón Volver */}
       <div>
         <Link
@@ -104,7 +136,7 @@ export default function BlogPostDetailPage() {
       {/* Imagen de Cabecera Principal */}
       <div className="relative rounded-2xl overflow-hidden border border-brand-darkLight/70 shadow-2xl max-h-[480px]">
         <img
-          src={post.image_url || "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=1200&q=80"}
+          src={pageImage}
           alt={post.title}
           className="w-full h-full object-cover"
         />

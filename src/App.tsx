@@ -1,6 +1,7 @@
 import CookieConsent from "react-cookie-consent";
 import React from "react";
 import { BrowserRouter as Router, Routes, Route, useLocation, Link } from "react-router-dom";
+import { Helmet } from "react-helmet-async"; // <--- Importación añadida aquí
 import Header from "./components/Header";
 import About from "./components/About";
 import Specialties from "./components/Specialties";
@@ -11,7 +12,7 @@ import FirmaPage from "./pages/FirmaPage";
 import SpecialtyDetailPage from "./pages/SpecialtyDetailPage";
 import { useLang } from "./context/LanguageContext";
 import BlogPage from "./pages/BlogPage";
-import BlogPostDetailPage from "./pages/BlogPostDetailPage"; // <--- Añadido
+import BlogPostDetailPage from "./pages/BlogPostDetailPage";
 import AdminPage from "./pages/AdminPage";
 import CookiesPage from "./pages/CookiesPage";
 
@@ -26,9 +27,29 @@ function ScrollToTop() {
 
 // Vista Home
 function HomePage() {
-  const { t } = useLang();
+  const { t, lang } = useLang();
+
+  // Metadatos SEO específicos para la página de inicio según el idioma activo
+  const seoMeta = {
+    es: {
+      title: "Beltrán & Uclés Abogados | Despacho Jurídico Especializado",
+      description: "Asesoramiento legal integral y defensa jurídica personalizada. Nuestro equipo de abogados expertos analiza su caso con rigurosidad y total confidencialidad."
+    },
+    fr: {
+      title: "Beltrán & Uclés Abogados | Cabinet d'Avocats Spécialisé",
+      description: "Conseil juridique global et défense personnalisée. Notre équipe d'avocats experts analyse votre affaire avec rigueur et totale confidentialité."
+    }
+  };
+
+  const currentMeta = seoMeta[lang as "es" | "fr"] || seoMeta.es;
+
   return (
     <div className="animate-fadeIn">
+      <Helmet>
+        <title>{currentMeta.title}</title>
+        <meta name="description" content={currentMeta.description} />
+      </Helmet>
+
       {/* Hero Section con Vídeo de Fondo */}
       <section className="relative w-full min-h-[85vh] flex items-center justify-center text-center px-4 py-24 sm:py-32 overflow-hidden bg-brand-dark">
         <video
@@ -88,8 +109,8 @@ export default function App() {
             <Route path="/especialidades/:slug" element={<SpecialtyDetailPage />} />
             <Route path="/contacto" element={<Contact />} />
             <Route path="/blog" element={<BlogPage />} />
-            <Route path="/blog/:slug" element={<BlogPostDetailPage />} /> {/* <--- Ruta del artículo individual */}
-            <Route path="/admin" element={<AdminPage />} />          
+            <Route path="/blog/:slug" element={<BlogPostDetailPage />} />
+            <Route path="/admin" element={<AdminPage />} />         
             <Route path="/politica-de-cookies" element={<CookiesPage />} />
           </Routes>
         </main>
