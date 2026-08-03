@@ -96,6 +96,11 @@ function HomePage() {
 export default function App() {
   return (
     <Router>
+      {/* Etiqueta global de Google Search Console para verificación */}
+      <Helmet>
+        <meta name="google-site-verification" content="09ZaubC-rTjctREyY0oaJApoG8DLXxcPHLT3pNBxBWM" />
+      </Helmet>
+
       <ScrollToTop />
       <div className="min-h-screen bg-brand-dark flex flex-col text-white font-sans selection:bg-brand-gold selection:text-brand-dark scroll-smooth relative">
         
@@ -110,7 +115,7 @@ export default function App() {
             <Route path="/contacto" element={<Contact />} />
             <Route path="/blog" element={<BlogPage />} />
             <Route path="/blog/:slug" element={<BlogPostDetailPage />} />
-            <Route path="/admin" element={<AdminPage />} />         
+            <Route path="/admin" element={<AdminPage />} />        
             <Route path="/politica-de-cookies" element={<CookiesPage />} />
           </Routes>
         </main>
