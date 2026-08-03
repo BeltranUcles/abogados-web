@@ -1,40 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:xhtml="http://www.w3.org/1999/xhtml">
-
-    <!-- Página de Inicio (ES) -->
-    <url>
-        <loc>https://beltranyuclesabogados.com/</loc>
-        <xhtml:link rel="alternate" hreflang="es" href="https://beltranyuclesabogados.com/" />
-        <xhtml:link rel="alternate" hreflang="fr" href="https://beltranyuclesabogados.com/" />
-        <changefreq>weekly</changefreq>
-        <priority>1.0</priority>
-    </url>
-
-    <!-- Página de la Firma / Quiénes Somos -->
-    <url>
-        <loc>https://beltranyuclesabogados.com/</loc>
-        <changefreq>monthly</changefreq>
-        <priority>0.8</priority>
-    </url>
-
-    <!-- Página de Blog -->
-    <url>
-        <loc>https://beltranyuclesabogados.com/</loc>
-        <changefreq>daily</changefreq>
-        <priority>0.9</priority>
-    </url>
-
-    <!-- Página de Contacto -->
-    <url>
-        <loc>https://beltranyuclesabogados.com/</loc>
-        <changefreq>monthly</changefreq>
-        <priority>0.7</priority>
-    </url>
-
-    <!-- Nota: Los posts individuales del blog cargados desde Supabase 
-         idealmente se incluirían aquí o se automatizarían mediante un script 
-         de generación si despliegas de forma estática, o gestionando el sitemap 
-         de manera dinámica en tu servidor/backend si lo tuviera. -->
-
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://beltranyuclesabogados.com/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://beltranyuclesabogados.com/firma</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://beltranyuclesabogados.com/especialidades</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://beltranyuclesabogados.com/contacto</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://beltranyuclesabogados.com/blog</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
 </urlset>
