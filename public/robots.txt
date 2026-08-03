@@ -6,5 +6,5 @@ Allow: /
 Disallow: /admin/
 Disallow: /private/
 
-# Enlace al mapa del sitio (reemplaza tu-dominio.com por tu dominio real)
-Sitemap: https://tu-dominio.com/sitemap.xml
+# Enlace al mapa del sitio
+Sitemap: https://beltranyuclesabogados.com/sitemap.xml
